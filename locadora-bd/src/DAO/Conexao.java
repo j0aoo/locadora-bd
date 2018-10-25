@@ -14,7 +14,7 @@ public class Conexao {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost/locadora";
             
-            con = (Connection) DriverManager.getConnection(url,"root","123");
+            con = (Connection) DriverManager.getConnection(url,"root","");
             
         } catch(Exception e){
             
