@@ -4,13 +4,12 @@ public class Funcionario {
 
     //atributos
     private int cod;
-    private int cod_filme;
-    private String situacao;
-    private double preco;
-    private String data_compra;
-    
+    private String nome; 
+    private String login;
+    private String senha;
     
     //getters e setters
+
     public int getCod() {
         return cod;
     }
@@ -19,38 +18,28 @@ public class Funcionario {
         this.cod = cod;
     }
 
-    public int getCod_filme() {
-        return cod_filme;
+    public String getNome() {
+        return nome;
     }
 
-    public void setCod_filme(int cod_filme) {
-        this.cod_filme = cod_filme;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getSituacao() {
-        return situacao;
+    public String getLogin() {
+        return login;
     }
 
-    public void setSituacao(String situacao) {
-        this.situacao = situacao;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public double getPreco() {
-        return preco;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
-
-    public String getData_compra() {
-        return data_compra;
-    }
-
-    public void setData_compra(String data_compra) {
-        this.data_compra = data_compra;
-    }
-    
-    
     
 }
