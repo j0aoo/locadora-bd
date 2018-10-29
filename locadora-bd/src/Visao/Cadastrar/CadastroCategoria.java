@@ -16,6 +16,10 @@ public class CadastroCategoria extends javax.swing.JFrame {
      */
     public CadastroCategoria() {
         initComponents();
+        setLocationRelativeTo(this);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
+
     }
 
     /**

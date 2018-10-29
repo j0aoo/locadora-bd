@@ -17,6 +17,8 @@ public class cadastrarFuncionario extends javax.swing.JFrame {
     public cadastrarFuncionario() {
         initComponents();
         setLocationRelativeTo(this);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
     }
 
     /**
