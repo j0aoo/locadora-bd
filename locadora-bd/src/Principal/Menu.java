@@ -29,6 +29,7 @@ import Visao.alterar.AlterarCliente;
 import Visao.alterar.AlterarDVD;
 import Visao.alterar.AlterarFilme;
 import Visao.alterar.AlterarFuncionario;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -123,6 +124,11 @@ public class Menu extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/sair1.png"))); // NOI18N
         jButton2.setText("Sair");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/DVD3.png"))); // NOI18N
@@ -547,6 +553,20 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         new AlterarFilme().setVisible(true);
     }//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        int exit = (int) JOptionPane.showConfirmDialog(null,"Deseja mesmo sair?");
+        
+        if (exit == 0) {
+            
+            new Login().setVisible(true);
+            dispose();
+            
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

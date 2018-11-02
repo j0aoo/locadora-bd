@@ -144,37 +144,35 @@ public class Login extends javax.swing.JFrame {
             if (sql.Logar(login, senha) == true) {
                 
                 new Thread(){
-                
-                    public void run(){
                     
+                    public void run(){
+                        
                         for (int i = 0; i < 101; i++) {
                             
                             jProgressBar.setValue(i);
-                            
+                          
                             try{
-                                
-                                Thread.sleep(300);
-                                
+                            
+                                Thread.sleep(15);
+                            
                             }catch(Exception ex){
                             
                                 ex.getMessage();
                             
                             }
-                            
-                            new Menu().setVisible(true);
-                            dispose();
-                            
+                        
                         }
                         
+                        new Menu().setVisible(true);
+                        dispose();
+                        
                     }
-                
+                    
                 }.start();
                 
             } else {
                 
-                JOptionPane.showMessageDialog(null, "Usuario ou senha invalidos", "Video locadora",
-                JOptionPane.ERROR_MESSAGE);
-                
+                JOptionPane.showMessageDialog(null, "Usuário ou senha Invalidos", "Video Locadora", JOptionPane.ERROR_MESSAGE);
                 tfUsuario.setText("");
                 pfSenha.setText("");
                 
@@ -186,7 +184,15 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        
+        int exit = (int) JOptionPane.showConfirmDialog(null,"Deseja mesmo sair?");
+        
+        if (exit == 0) {
+            
+            System.exit(0);
+            
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuarioActionPerformed

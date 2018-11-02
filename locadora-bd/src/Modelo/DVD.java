@@ -8,6 +8,7 @@ public class DVD {
     private String situacao;
     private double preco;
     private String data_compra;
+    private String capa;
     
     //getters e setters
 
@@ -50,6 +51,13 @@ public class DVD {
     public void setData_compra(String data_compra) {
         this.data_compra = data_compra;
     }
-    
-    
+
+    public String getCapa() {
+        return capa;
+    }
+
+    public void setCapa(String capa) {
+        this.capa = capa;
+    }
+ 
 }
