@@ -7,9 +7,13 @@ package Visao.Cadastrar;
 
 import DAO.Conexao;
 import DAO.DVDDAO;
+import DAO.FilmeDAO;
 import Modelo.DVD;
+import Modelo.Filme;
 import java.io.File;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -28,8 +32,29 @@ public class CadastrarDVD extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
+        ComboBox();
     }
 
+    public void ComboBox(){
+        
+        Connection con = Conexao.AbrirConexao();
+        FilmeDAO bd = new FilmeDAO(con);
+        List<Filme> lista = new ArrayList<>();
+        lista = bd.ListarFilme();
+        
+        int i = 0;
+        for (Filme tab : lista) {
+            
+            jComboBox1.addItem(tab.getTitulo()+" ID - "+tab.getCodigo());
+
+            i++;
+            
+        }  
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,7 +116,11 @@ public class CadastrarDVD extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Id - Filme");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Situação");
@@ -204,10 +233,11 @@ public class CadastrarDVD extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTF_Filme, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jTF_Filme, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -240,7 +270,7 @@ public class CadastrarDVD extends javax.swing.JFrame {
         String situacao = jTF_Situacao.getText();
         String capa = jTF_Capa.getText();
         
-        if (idFilme < 0 || precoCompra < 0 || dataCompra.equals("") || situacao.equals("")) {
+        if (jTF_Filme.equals("") || jTF_Preco.equals("") || situacao.equals("") || jTF_Capa.getText().equals("")){
             
             JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!", "Video Locadora", JOptionPane.WARNING_MESSAGE);
            
@@ -294,6 +324,11 @@ public class CadastrarDVD extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_bTCapaActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments

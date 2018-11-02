@@ -5,15 +5,22 @@
  */
 package Visao.Cadastrar;
 
+import DAO.CategoriaDAO;
+import DAO.ClassificacaoDAO;
 import DAO.Conexao;
 import DAO.FilmeDAO;
+import Modelo.Categoria;
+import Modelo.Classificacao;
 import Modelo.Cliente;
 import Modelo.Filme;
 import java.io.File;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,9 +35,51 @@ public class CadastrarFilme extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-     
+        setResizable(false);
+        ComboCategoria();
+        ComboClassificacao();
     }
 
+    public void ComboCategoria(){
+        
+        Connection con = Conexao.AbrirConexao();
+        CategoriaDAO bd = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        lista = bd.ListarCategoria();
+      
+        int i = 0;
+        for (Categoria tab : lista) {
+            
+            Select_Categoria.addItem(tab.getNome()+" ID - "+tab.getCodigo());
+            
+            i++;
+            
+        }
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
+    public void ComboClassificacao() {
+        
+        Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO bd = new ClassificacaoDAO(con);
+        List<Classificacao> lista = new ArrayList<>();
+        lista = bd.ListarClassificacao();
+
+        int i = 0;
+        for (Classificacao tab : lista) {
+            
+            Select_Class.addItem(tab.getNome()+" ID - "+tab.getCodigo());
+            
+            i++;
+            
+        }
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,12 +211,8 @@ public class CadastrarFilme extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Categoria");
 
-        Select_Categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Classificação");
-
-        Select_Class.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("Capa");
@@ -347,13 +392,6 @@ public class CadastrarFilme extends javax.swing.JFrame {
             a.setCod_categoria(idCat);
             a.setCod_classificacao(idClass);
             a.setCapa(capa);
-            
-            System.out.println(""+tfCapa.getText());
-            System.out.println(""+jTF_Titulo.getText());
-            System.out.println(""+jTF_Ano.getText());
-            System.out.println(""+jTF_Classificacao.getText());
-            System.out.println(""+jTF_Categoria.getText());
-            System.out.println(""+jTF_Duracao.getText());
             
             sql.Inserir_Filme(a);
             Conexao.FecharConexao(con);

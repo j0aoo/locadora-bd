@@ -1,9 +1,13 @@
 package DAO;
 
+import Modelo.Cliente;
 import Modelo.Filme;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FilmeDAO extends ExecuteSQL {
     
@@ -42,5 +46,48 @@ public class FilmeDAO extends ExecuteSQL {
         }
         
     }
+    
+    public List<Filme> ListarFilme() {
+    
+        String sql = "select idfilme,titulo,ano,duracao,idcategoria,idclassificacao from filme";
+        List<Filme> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Filme a = new Filme();
+                    a.setCodigo(rs.getInt(1));
+                    a.setTitulo(rs.getString(2));
+                    a.setAno(rs.getInt(3));
+                    a.setDuracao(rs.getString(4));
+                    a.setCod_categoria(rs.getInt(5));
+                    a.setCod_classificacao(rs.getInt(6));
+                    
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
     
 }

@@ -5,6 +5,15 @@
  */
 package Visao.Consultar;
 
+import DAO.ClienteDAO;
+import DAO.Conexao;
+import DAO.FilmeDAO;
+import Modelo.Filme;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author cliente
@@ -19,8 +28,43 @@ public class ConsultarFilme extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
+        AtualizaTable();
     }
 
+    public void AtualizaTable() {
+        
+        Connection con = Conexao.AbrirConexao();
+        FilmeDAO bd = new FilmeDAO(con);
+        List<Filme> lista = new ArrayList<>();
+        lista = bd.ListarFilme();
+        
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        
+        while (tbm.getRowCount() > 0) {
+            
+            tbm.removeRow(0);
+            
+        }
+
+        int i = 0;
+        for (Filme tab : lista) {
+            
+            tbm.addRow(new String[i]);
+            jTable1.setValueAt(tab.getCodigo(), i, 0);
+            jTable1.setValueAt(tab.getTitulo(), i, 1);
+            jTable1.setValueAt(tab.getAno(), i, 2);
+            jTable1.setValueAt(tab.getDuracao(), i, 3);
+            jTable1.setValueAt(tab.getCod_categoria(), i, 4);
+            jTable1.setValueAt(tab.getCod_classificacao(), i, 5);
+            
+            i++;
+            
+        }
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -103,14 +147,14 @@ public class ConsultarFilme extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(26, Short.MAX_VALUE))

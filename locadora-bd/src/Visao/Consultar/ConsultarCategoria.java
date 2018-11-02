@@ -5,6 +5,14 @@
  */
 package Visao.Consultar;
 
+import DAO.CategoriaDAO;
+import DAO.Conexao;
+import Modelo.Categoria;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author cliente
@@ -19,8 +27,105 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
+        AtualizaTable();
     }
+    
+    public void AtualizaTable() {
+        
+        Connection con = Conexao.AbrirConexao();
+        CategoriaDAO bd = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        lista = bd.ListarCategoria();
+        
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        
+        while (tbm.getRowCount() > 0) {
+            
+            tbm.removeRow(0);
+            
+        }
 
+        int i = 0;
+        for (Categoria tab : lista) {
+            
+            tbm.addRow(new String[i]);
+            jTable1.setValueAt(tab.getCodigo(), i, 0);
+            jTable1.setValueAt(tab.getNome(), i, 1);
+            
+            i++;
+            
+        }
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
+    public void PesquisaNome(){
+        
+        Connection con = Conexao.AbrirConexao();
+        CategoriaDAO bd = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        lista = bd.Pesquisar_Nome_Categoria(jTF_PesquisaNome.getText());
+        
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        
+        while (tbm.getRowCount() > 0) {
+            
+            tbm.removeRow(0);
+            
+        }
+
+        int i = 0;
+        for (Categoria tab : lista) {
+            
+            tbm.addRow(new String[i]);
+            jTable1.setValueAt(tab.getCodigo(), i, 0);
+            jTable1.setValueAt(tab.getNome(), i, 1);
+            
+            i++;
+            
+        }
+        
+        jTF_PesquisaCod.setText("");
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
+    public void PesquisaCod(){
+        
+        int cod = Integer.parseInt(jTF_PesquisaCod.getText());
+        
+        Connection con = Conexao.AbrirConexao();
+        CategoriaDAO bd = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        lista = bd.Pesquisar_Cod_Categoria(cod);
+        
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        
+        while (tbm.getRowCount() > 0) {
+            
+            tbm.removeRow(0);
+            
+        }
+
+        int i = 0;
+        for (Categoria tab : lista) {
+            
+            tbm.addRow(new String[i]);
+            jTable1.setValueAt(tab.getCodigo(), i, 0);
+            jTable1.setValueAt(tab.getNome(), i, 1);
+            
+            i++;
+            
+        }
+        
+        jTF_PesquisaNome.setText("");
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,10 +138,10 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTF_PesquisaNome = new javax.swing.JTextField();
         jToggleButton1 = new javax.swing.JToggleButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTF_PesquisaCod = new javax.swing.JTextField();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
 
@@ -64,14 +169,29 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         jLabel2.setText("Pesquisa por categoria");
 
         jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/lupa1.png"))); // NOI18N
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Pesquisa por codigo");
 
         jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/lupa1.png"))); // NOI18N
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
 
         jToggleButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jToggleButton3.setText("Todos");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,13 +204,13 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTF_PesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTF_PesquisaCod, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4)
                         .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55)
@@ -103,14 +223,14 @@ public class ConsultarCategoria extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTF_PesquisaCod, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTF_PesquisaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -118,6 +238,27 @@ public class ConsultarCategoria extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here:
+        
+      PesquisaNome();
+        
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        AtualizaTable();
+        
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        PesquisaCod();
+        
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -158,9 +299,9 @@ public class ConsultarCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTF_PesquisaCod;
+    private javax.swing.JTextField jTF_PesquisaNome;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
