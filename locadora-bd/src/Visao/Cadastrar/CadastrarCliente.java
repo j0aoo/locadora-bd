@@ -227,6 +227,12 @@ public class CadastrarCliente extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("Nº");
 
+        jTF_Bairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTF_BairroActionPerformed(evt);
+            }
+        });
+
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel15.setText("Bairro");
 
@@ -439,6 +445,10 @@ public class CadastrarCliente extends javax.swing.JFrame {
             jTF_RG.setText("");
         
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTF_BairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_BairroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTF_BairroActionPerformed
 
     /**
      * @param args the command line arguments

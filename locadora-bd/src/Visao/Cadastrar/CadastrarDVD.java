@@ -32,23 +32,41 @@ public class CadastrarDVD extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-        ComboBox();
+        ComboFilme();
     }
 
-    public void ComboBox(){
+    public void ComboFilme(){
         
         Connection con = Conexao.AbrirConexao();
         FilmeDAO bd = new FilmeDAO(con);
         List<Filme> lista = new ArrayList<>();
-        lista = bd.ListarFilme();
         
-        int i = 0;
+        lista = bd.ListarFilme();
+        jComboBox1.addItem(" - ");
+        
         for (Filme tab : lista) {
             
-            jComboBox1.addItem(tab.getTitulo()+" ID - "+tab.getCodigo());
+            jComboBox1.addItem(tab.getTitulo());
 
-            i++;
+        }  
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
+    public void SelecionaComboFilme(){
+        
+        Connection con = Conexao.AbrirConexao();
+        FilmeDAO bd = new FilmeDAO(con);
+        List<Filme> lista = new ArrayList<>();
+        
+        lista = bd.ConsultaCodigoCliente(jComboBox1.getSelectedItem().toString());
+        
+        for (Filme tab : lista) {
             
+            int a = tab.getCodigo();
+            jTF_Filme.setText(""+a);
+
         }  
         
         Conexao.FecharConexao(con);
@@ -110,11 +128,15 @@ public class CadastrarDVD extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
+        jTextField1.setEditable(false);
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Codigo");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Id - Filme");
+
+        jTF_Filme.setEditable(false);
 
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,6 +349,8 @@ public class CadastrarDVD extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+
+        SelecionaComboFilme();
         
     }//GEN-LAST:event_jComboBox1ActionPerformed
 

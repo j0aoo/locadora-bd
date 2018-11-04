@@ -89,5 +89,41 @@ public class FilmeDAO extends ExecuteSQL {
         
     }
     
+    public List<Filme> ConsultaCodigoCliente(String nome) {
+        
+        String sql = "select idfilme from filme where titulo = '"+ nome +"'";
+        List<Filme> lista = new ArrayList<>();
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Filme a = new Filme();
+                    a.setCodigo(rs.getInt(1));
+                    lista.add(a);
+
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        
+    }
+        
     
 }

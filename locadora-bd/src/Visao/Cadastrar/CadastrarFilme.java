@@ -11,7 +11,6 @@ import DAO.Conexao;
 import DAO.FilmeDAO;
 import Modelo.Categoria;
 import Modelo.Classificacao;
-import Modelo.Cliente;
 import Modelo.Filme;
 import java.io.File;
 import java.sql.Connection;
@@ -39,40 +38,61 @@ public class CadastrarFilme extends javax.swing.JFrame {
         ComboCategoria();
         ComboClassificacao();
     }
-
+    
+    //Categoria
     public void ComboCategoria(){
         
         Connection con = Conexao.AbrirConexao();
         CategoriaDAO bd = new CategoriaDAO(con);
         List<Categoria> lista = new ArrayList<>();
+        
         lista = bd.ListarCategoria();
-      
-        int i = 0;
+        Select_Categoria.addItem(" - ");
+        
         for (Categoria tab : lista) {
             
-            Select_Categoria.addItem(tab.getNome()+" ID - "+tab.getCodigo());
-            
-            i++;
+            Select_Categoria.addItem(tab.getNome());
             
         }
         
         Conexao.FecharConexao(con);
         
     }
+    
+    public void SelecionaComboCategoria(){
+        
+        Connection con = Conexao.AbrirConexao();
+        CategoriaDAO bd = new CategoriaDAO(con);
+        List<Categoria> lista = new ArrayList<>();
+        
+        lista = bd.ConsultaCodigoCategoria(Select_Categoria.getSelectedItem().toString());
+
+        for (Categoria tab : lista) {
+
+            int a = tab.getCodigo();
+            jTF_Categoria.setText(""+a);
+            
+        }
+        
+        Conexao.FecharConexao(con);
+
+        
+    }
+    
+    // Classificação
     
     public void ComboClassificacao() {
         
         Connection con = Conexao.AbrirConexao();
         ClassificacaoDAO bd = new ClassificacaoDAO(con);
         List<Classificacao> lista = new ArrayList<>();
+        
         lista = bd.ListarClassificacao();
+        Select_Class.addItem(" - ");
 
-        int i = 0;
         for (Classificacao tab : lista) {
             
-            Select_Class.addItem(tab.getNome()+" ID - "+tab.getCodigo());
-            
-            i++;
+            Select_Class.addItem(tab.getNome());
             
         }
         
@@ -80,6 +100,25 @@ public class CadastrarFilme extends javax.swing.JFrame {
         
     }
     
+    public void SelecionaComboClassificacao(){
+        
+        Connection con = Conexao.AbrirConexao();
+        ClassificacaoDAO bd = new ClassificacaoDAO(con);
+        List<Classificacao> lista = new ArrayList<>();
+        
+        lista = bd.ConsultaCodigoClassificacao(Select_Class.getSelectedItem().toString());
+
+        for (Classificacao tab : lista) {
+
+            int a = tab.getCodigo();
+            jTF_Classificacao.setText(""+a);
+            
+        }
+        
+        Conexao.FecharConexao(con);
+
+    }
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -211,8 +250,24 @@ public class CadastrarFilme extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Categoria");
 
+        jTF_Categoria.setEditable(false);
+
+        Select_Categoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Select_CategoriaActionPerformed(evt);
+            }
+        });
+
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Classificação");
+
+        jTF_Classificacao.setEditable(false);
+
+        Select_Class.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Select_ClassActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("Capa");
@@ -409,6 +464,20 @@ public class CadastrarFilme extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void Select_CategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Select_CategoriaActionPerformed
+        // TODO add your handling code here:
+        
+       SelecionaComboCategoria();
+        
+    }//GEN-LAST:event_Select_CategoriaActionPerformed
+
+    private void Select_ClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Select_ClassActionPerformed
+        // TODO add your handling code here:
+        
+        SelecionaComboClassificacao();
+        
+    }//GEN-LAST:event_Select_ClassActionPerformed
 
     /**
      * @param args the command line arguments

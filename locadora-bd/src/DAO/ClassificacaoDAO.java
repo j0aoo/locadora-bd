@@ -157,4 +157,41 @@ public class ClassificacaoDAO extends ExecuteSQL {
         }
     }
     
+    public List<Classificacao> ConsultaCodigoClassificacao(String nome) {
+        
+        String sql = "select idclassificacao from classificacao where nome = '"+ nome +"'";
+        List<Classificacao> lista = new ArrayList<>();
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Classificacao a = new Classificacao();
+                    a.setCodigo(rs.getInt(1));
+                    lista.add(a);
+
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        
+    }
+
+    
 }

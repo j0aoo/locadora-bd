@@ -5,6 +5,14 @@
  */
 package Visao.Consultar;
 
+import Modelo.DVD;
+import DAO.Conexao;
+import DAO.DVDDAO;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author cliente
@@ -19,8 +27,42 @@ public class ConsultarDVD extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
+        AtualizaTable();
     }
 
+    public void AtualizaTable() {
+        
+        Connection con = Conexao.AbrirConexao();
+        DVDDAO bd = new DVDDAO(con);
+        List<DVD> lista = new ArrayList<>();
+        lista = bd.ListarDVD();
+        
+        DefaultTableModel tbm = (DefaultTableModel) jTable1.getModel();
+        
+        while (tbm.getRowCount() > 0) {
+            
+            tbm.removeRow(0);
+            
+        }
+
+        int i = 0;
+        for (DVD tab : lista) {
+            
+            tbm.addRow(new String[i]);
+            jTable1.setValueAt(tab.getCodigo(), i, 0);
+            jTable1.setValueAt(tab.getCod_filme(), i, 1);
+            jTable1.setValueAt(tab.getPreco(), i, 2);
+            jTable1.setValueAt(tab.getData_compra(), i, 3);
+            jTable1.setValueAt(tab.getSituacao(), i, 4);
+            
+            i++;
+            
+        }
+        
+        Conexao.FecharConexao(con);
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
