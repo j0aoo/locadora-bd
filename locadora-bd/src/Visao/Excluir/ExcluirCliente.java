@@ -26,10 +26,10 @@ public class ExcluirCliente extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
-        AtualizaCampo();
+        AtualizaCombo();
     }
 
-    public void AtualizaCampo(){
+    public void AtualizaCombo(){
         
         Connection con = Conexao.AbrirConexao();
         ClienteDAO sql = new ClienteDAO(con);

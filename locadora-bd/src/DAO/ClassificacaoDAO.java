@@ -157,6 +157,43 @@ public class ClassificacaoDAO extends ExecuteSQL {
         }
     }
     
+
+    public List<Classificacao> ListarComboClassificacao(){
+        
+        String sql = "select nome from classificacao order by nome";
+        List<Classificacao> lista = new ArrayList<>();
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Classificacao a = new Classificacao();
+                    a.setNome(rs.getString(1));
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (Exception e) {
+        
+            return null;
+        
+        }
+        
+    }
+
     public List<Classificacao> ConsultaCodigoClassificacao(String nome) {
         
         String sql = "select idclassificacao from classificacao where nome = '"+ nome +"'";
@@ -192,6 +229,33 @@ public class ClassificacaoDAO extends ExecuteSQL {
         }
         
     }
-
+    
+    public String Excluir_Classificacao(Classificacao a){
+        
+        String sql = "delete from classificacao where idclassificacao = ? and nome = ?";
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setInt(1, a.getCodigo());
+            ps.setString(2, a.getNome());
+            
+            if (ps.executeUpdate() > 0) {
+                
+                return "Excluido com sucesso";
+                
+            } else {
+                
+                return "Erro ao excluir";
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return e.getMessage();
+            
+        }
+        
+    }
     
 }

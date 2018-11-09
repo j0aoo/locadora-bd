@@ -152,6 +152,80 @@ public class CategoriaDAO extends ExecuteSQL {
         }
     }
     
+    
+    
+    public List<Categoria> ConsultaCodigoCategoriaNome(int cod) {
+        
+        String sql = "select nome from categoria where idcategoria = '"+ cod +"'";
+        List<Categoria> lista = new ArrayList<>();
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Categoria a = new Categoria();
+                    a.setNome(rs.getString(1));
+                    lista.add(a);
+
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (Exception e) {
+            
+            return null;
+            
+        }
+        
+    }
+
+    public List<Categoria> ListarComboCategoria(){
+        
+        String sql = "select nome from categoria order by nome";
+        List<Categoria> lista = new ArrayList<>();
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Categoria a = new Categoria();
+                    a.setNome(rs.getString(1));
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (Exception e) {
+        
+            return null;
+        
+        }
+        
+    }
+
     public List<Categoria> ConsultaCodigoCategoria(String nome) {
         
         String sql = "select idcategoria from categoria where nome = '"+ nome +"'";
@@ -188,37 +262,29 @@ public class CategoriaDAO extends ExecuteSQL {
         
     }
     
-    public List<Categoria> ConsultaCodigoCategoriaNome(int cod) {
+    public String Excluir_Categoria(Categoria a){
         
-        String sql = "select nome from categoria where idcategoria = '"+ cod +"'";
-        List<Categoria> lista = new ArrayList<>();
+        String sql = "delete from categoria where idcategoria = ? and nome = ?";
         
         try {
             
             PreparedStatement ps = getcon().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            ps.setInt(1, a.getCodigo());
+            ps.setString(2, a.getNome());
             
-            if (rs != null) {
+            if (ps.executeUpdate() > 0) {
                 
-                while (rs.next()) {
-                    
-                    Categoria a = new Categoria();
-                    a.setNome(rs.getString(1));
-                    lista.add(a);
-
-                }
-                
-                return lista;
+                return "Excluido com sucesso";
                 
             } else {
                 
-                return null;
+                return "Erro ao excluir";
                 
             }
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             
-            return null;
+            return e.getMessage();
             
         }
         
