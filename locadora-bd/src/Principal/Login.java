@@ -25,6 +25,65 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(this);
     }
 
+    public void Logar(){
+        
+        Connection con = Conexao.AbrirConexao();
+        FuncionarioDAO sql = new FuncionarioDAO(con);
+        
+        String login = tfUsuario.getText();
+        String senha = pfSenha.getText();
+        
+        if (login.equalsIgnoreCase("") || senha.equalsIgnoreCase("")) {
+            
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio",
+            "Video locadora", JOptionPane.WARNING_MESSAGE);
+            
+            tfUsuario.setText("");
+            pfSenha.setText("");
+            
+        } else {
+            
+            if (sql.Logar(login, senha) == true) {
+                
+                new Thread(){
+                    
+                    public void run(){
+                        
+                        for (int i = 0; i < 101; i++) {
+                            
+                            jProgressBar.setValue(i);
+                          
+                            try{
+                            
+                                Thread.sleep(15);
+                            
+                            }catch(Exception ex){
+                            
+                                ex.getMessage();
+                            
+                            }
+                        
+                        }
+                        
+                        new Menu().setVisible(true);
+                        dispose();
+                        
+                    }
+                    
+                }.start();
+                
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Usuário ou senha Invalidos", "Video Locadora", JOptionPane.ERROR_MESSAGE);
+                tfUsuario.setText("");
+                pfSenha.setText("");
+                
+            }
+            
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,6 +127,12 @@ public class Login extends javax.swing.JFrame {
         });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/locadora.jpg"))); // NOI18N
+
+        pfSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pfSenhaActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Sair");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -125,60 +190,7 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        Connection con = Conexao.AbrirConexao();
-        FuncionarioDAO sql = new FuncionarioDAO(con);
-        
-        String login = tfUsuario.getText();
-        String senha = pfSenha.getText();
-        
-        if (login.equalsIgnoreCase("") || senha.equalsIgnoreCase("")) {
-            
-            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio",
-            "Video locadora", JOptionPane.WARNING_MESSAGE);
-            
-            tfUsuario.setText("");
-            pfSenha.setText("");
-            
-        } else {
-            
-            if (sql.Logar(login, senha) == true) {
-                
-                new Thread(){
-                    
-                    public void run(){
-                        
-                        for (int i = 0; i < 101; i++) {
-                            
-                            jProgressBar.setValue(i);
-                          
-                            try{
-                            
-                                Thread.sleep(15);
-                            
-                            }catch(Exception ex){
-                            
-                                ex.getMessage();
-                            
-                            }
-                        
-                        }
-                        
-                        new Menu().setVisible(true);
-                        dispose();
-                        
-                    }
-                    
-                }.start();
-                
-            } else {
-                
-                JOptionPane.showMessageDialog(null, "Usuário ou senha Invalidos", "Video Locadora", JOptionPane.ERROR_MESSAGE);
-                tfUsuario.setText("");
-                pfSenha.setText("");
-                
-            }
-            
-        }
+        Logar();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -198,6 +210,13 @@ public class Login extends javax.swing.JFrame {
     private void tfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfUsuarioActionPerformed
+
+    private void pfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfSenhaActionPerformed
+        // TODO add your handling code here:
+        
+        Logar();
+        
+    }//GEN-LAST:event_pfSenhaActionPerformed
 
     /**
      * @param args the command line arguments

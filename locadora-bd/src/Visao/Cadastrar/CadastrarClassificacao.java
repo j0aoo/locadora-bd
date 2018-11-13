@@ -28,6 +28,37 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
 
     }
 
+    public void Cadastra(){
+        
+        String nome = jTF_Nome.getText();
+        double preco = Double.parseDouble(jTF_Preco.getText());
+        
+        if (nome.equals("") || jTF_Preco.getText().equals("")) {
+            
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!", "Video Locadora", JOptionPane.WARNING_MESSAGE);
+            
+        } else {
+            
+            Connection con = Conexao.AbrirConexao();
+            ClassificacaoDAO sql = new ClassificacaoDAO(con);
+            Classificacao a = new Classificacao();
+
+            a.setNome(nome);
+            a.setPreco(preco);
+
+            sql.Inserir_Classificacao(a);
+            Conexao.FecharConexao(con);
+
+            jTF_Nome.setText("");
+            jTF_Preco.setText("");
+
+            JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,6 +105,14 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
+        jTextField1.setEditable(false);
+
+        jTF_Nome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTF_NomeActionPerformed(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Nome");
 
@@ -92,6 +131,11 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
         jButton4.setText("Cancelar");
 
         jButton5.setText("Limpar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -165,34 +209,21 @@ public class CadastrarClassificacao extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         
-        String nome = jTF_Nome.getText();
-        double preco = Double.parseDouble(jTF_Preco.getText());
-        
-        if (nome.equals("") || preco <=0) {
-            
-            JOptionPane.showMessageDialog(null, "Nenhum campo pode estar vazio!", "Video Locadora", JOptionPane.WARNING_MESSAGE);
-            
-        } else {
-            
-            Connection con = Conexao.AbrirConexao();
-            ClassificacaoDAO sql = new ClassificacaoDAO(con);
-            Classificacao a = new Classificacao();
-
-            a.setNome(nome);
-            a.setPreco(preco);
-
-            sql.Inserir_Classificacao(a);
-            Conexao.FecharConexao(con);
-
-            jTF_Nome.setText("");
-            jTF_Preco.setText("");
-
-            JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!", "Video Locadora", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
-            
-        }
+        Cadastra();
         
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        
+        jTF_Nome.setText("");
+        jTF_Preco.setText("");
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTF_NomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_NomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTF_NomeActionPerformed
 
     /**
      * @param args the command line arguments

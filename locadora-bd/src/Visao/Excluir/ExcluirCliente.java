@@ -116,7 +116,7 @@ public class ExcluirCliente extends javax.swing.JFrame {
         jTf_Codigo.setEditable(false);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Nome");
+        jLabel2.setText("Cod");
 
         ComboNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,7 +202,13 @@ public class ExcluirCliente extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         
-        System.exit(0);
+        int exit = (int) JOptionPane.showConfirmDialog(null,"Deseja mesmo cancelar a operação?");
+        
+        if (exit == 0) {
+            
+            dispose();
+            
+        }
         
     }//GEN-LAST:event_jButton5ActionPerformed
 

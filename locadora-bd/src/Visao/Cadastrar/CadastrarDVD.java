@@ -11,6 +11,9 @@ import DAO.FilmeDAO;
 import Modelo.DVD;
 import Modelo.Filme;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +63,7 @@ public class CadastrarDVD extends javax.swing.JFrame {
         FilmeDAO bd = new FilmeDAO(con);
         List<Filme> lista = new ArrayList<>();
         
-        lista = bd.ConsultaCodigoCliente(jComboBox1.getSelectedItem().toString());
+        lista = bd.ConsultaCodigoFilme(jComboBox1.getSelectedItem().toString());
         
         for (Filme tab : lista) {
             
@@ -167,6 +170,11 @@ public class CadastrarDVD extends javax.swing.JFrame {
         jButton4.setText("Cancelar");
 
         jButton5.setText("Limpar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -335,9 +343,24 @@ public class CadastrarDVD extends javax.swing.JFrame {
             foto.setDialogTitle("Carregar capa");
             foto.showOpenDialog(this);
             
+            String diretorio = ""+foto.getSelectedFile();
+            String nome = ""+foto.getSelectedFile().getName();
+            
+            FileInputStream origem; 
+            FileOutputStream destino;
+            FileChannel fcOrigem;
+            FileChannel fcDestino;
+            origem = new FileInputStream(""+diretorio);//arquivo que você quer copiar
+            destino = new FileOutputStream("ImagensDVD/"+nome);//onde irá ficar a copia do aquivo
+            fcOrigem = origem.getChannel();
+            fcDestino = destino.getChannel();
+            fcOrigem.transferTo(0, fcOrigem.size(), fcDestino);//copiando o arquivo e salvando no diretório que você escolheu
+            origem.close();
+            destino.close();
+            
             String a = ""+foto.getSelectedFile().getName();
             jTF_Capa.setText(a);
-            lbCapa.setIcon(new ImageIcon("/c:/Locadora/img/"+jTF_Capa.getText()));
+            lbCapa.setIcon(new ImageIcon("ImagensDVD/"+jTF_Capa.getText()));
             
         } catch (Exception e) {
             
@@ -353,6 +376,16 @@ public class CadastrarDVD extends javax.swing.JFrame {
         SelecionaComboFilme();
         
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        
+        jTF_Filme.setText("");
+        jTF_Preco.setText("");
+        jD_DataCompra.setToolTipText("");
+        jTF_Situacao.setText("");
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

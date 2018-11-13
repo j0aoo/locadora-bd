@@ -168,6 +168,12 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Pesquisa por categoria");
 
+        jTF_PesquisaNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTF_PesquisaNomeActionPerformed(evt);
+            }
+        });
+
         jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/lupa1.png"))); // NOI18N
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,6 +183,12 @@ public class ConsultarCategoria extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Pesquisa por codigo");
+
+        jTF_PesquisaCod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTF_PesquisaCodActionPerformed(evt);
+            }
+        });
 
         jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/lupa1.png"))); // NOI18N
         jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -259,6 +271,20 @@ public class ConsultarCategoria extends javax.swing.JFrame {
         PesquisaCod();
         
     }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jTF_PesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_PesquisaNomeActionPerformed
+        // TODO add your handling code here:
+        
+        PesquisaNome();
+        
+    }//GEN-LAST:event_jTF_PesquisaNomeActionPerformed
+
+    private void jTF_PesquisaCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_PesquisaCodActionPerformed
+        // TODO add your handling code here:
+        
+        PesquisaCod();
+        
+    }//GEN-LAST:event_jTF_PesquisaCodActionPerformed
 
     /**
      * @param args the command line arguments

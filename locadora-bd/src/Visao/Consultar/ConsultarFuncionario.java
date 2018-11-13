@@ -172,6 +172,12 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Pesquisa por nome");
 
+        jTF_Nome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTF_NomeActionPerformed(evt);
+            }
+        });
+
         jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/lupa1.png"))); // NOI18N
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,6 +187,12 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Pesquisa por codigo");
+
+        jTF_Cod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTF_CodActionPerformed(evt);
+            }
+        });
 
         jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/lupa1.png"))); // NOI18N
         jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -263,6 +275,20 @@ public class ConsultarFuncionario extends javax.swing.JFrame {
         AtualizaTable();
         
     }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jTF_NomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_NomeActionPerformed
+        // TODO add your handling code here:
+        
+        PesquisaNome();
+        
+    }//GEN-LAST:event_jTF_NomeActionPerformed
+
+    private void jTF_CodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_CodActionPerformed
+        // TODO add your handling code here:
+        
+        PesquisaCod();
+        
+    }//GEN-LAST:event_jTF_CodActionPerformed
 
     /**
      * @param args the command line arguments

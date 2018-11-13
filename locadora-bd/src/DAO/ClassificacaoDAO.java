@@ -258,4 +258,103 @@ public class ClassificacaoDAO extends ExecuteSQL {
         
     }
     
+    public boolean Testar_Classificacao(int cod) {
+        
+        boolean Resultado = false;
+        
+        try {
+            
+            String sql = "select * from classificacao where idclassificacao = "+ cod +"";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Resultado = true;
+                    
+                }
+                
+            }
+            
+        } catch (SQLException ex) {
+        
+            ex.getMessage();
+        
+        }
+        
+        return Resultado;
+        
+    }
+    
+    public List<Classificacao> CapturarClassificacao(int cod){
+        
+        String sql = "select * from classificacao where idclassificacao = "+ cod +"";
+        List<Classificacao> lista = new ArrayList<>();
+        
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Classificacao a = new Classificacao();
+                    
+                    a.setCodigo(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setPreco(rs.getDouble(3));
+                    
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+            
+    }
+    
+    public String Alterar_Classificacao(Classificacao a) {
+        
+        String sql = "update classificacao set nome = ? ,preco = ? where idclassificacao = ? ";
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setString(1, a.getNome());
+            ps.setDouble(2, a.getPreco());
+            ps.setInt(3, a.getCodigo());
+            
+            if (ps.executeUpdate() > 0) {
+                
+                return "Atualizado com sucesso!";
+                
+            } else {
+                
+                return "Erro ao Atualizar!";
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return e.getMessage();
+            
+        }
+        
+    }
+    
 }

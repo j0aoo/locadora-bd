@@ -297,5 +297,105 @@ public class FuncionarioDAO extends ExecuteSQL {
         
     }
     
+    public boolean Testar_Funcionario(int cod) {
+        
+        boolean Resultado = false;
+        
+        try {
+            
+            String sql = "select * from funcionario where idfuncionario = "+ cod +"";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Resultado = true;
+                    
+                }
+                
+            }
+            
+        } catch (SQLException ex) {
+        
+            ex.getMessage();
+        
+        }
+        
+        return Resultado;
+        
+    }
+    
+    public List<Funcionario> CapturarFuncionario(int cod){
+        
+        String sql = "select * from funcionario where idfuncionario = "+ cod +"";
+        List<Funcionario> lista = new ArrayList<>();
+        
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Funcionario a = new Funcionario();
+                    
+                    a.setCod(rs.getInt(1));
+                    a.setNome(rs.getString(2));
+                    a.setLogin(rs.getString(3));
+                    a.setSenha(rs.getString(4));
+                    
+                    lista.add(a);
+                    
+                }
+                
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+            
+    }
+    
+    public String Alterar_Funcionario(Funcionario a) {
+        
+        String sql = "update funcionario set nome = ? ,login = ? ,senha = ? where idfuncionario = ? ";
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ps.setString(1, a.getNome());
+            ps.setString(2, a.getLogin());
+            ps.setString(3, a.getSenha());
+            ps.setInt(4, a.getCod());
+            
+            if (ps.executeUpdate() > 0) {
+                
+                return "Atualizado com sucesso!";
+                
+            } else {
+                
+                return "Erro ao Atualizar!";
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return e.getMessage();
+            
+        }
+        
+    }
     
 }

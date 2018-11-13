@@ -178,6 +178,12 @@ public class ConsultarCliente extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Pesquisa por codigo");
 
+        jTF_Cod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTF_CodActionPerformed(evt);
+            }
+        });
+
         jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/lupa1.png"))); // NOI18N
         jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,6 +265,9 @@ public class ConsultarCliente extends javax.swing.JFrame {
 
     private void jTF_PesquisaNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_PesquisaNomeActionPerformed
         // TODO add your handling code here:
+        
+        PesquisaNome();
+        
     }//GEN-LAST:event_jTF_PesquisaNomeActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
@@ -281,6 +290,13 @@ public class ConsultarCliente extends javax.swing.JFrame {
         PesquisaCod();
         
     }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void jTF_CodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_CodActionPerformed
+        // TODO add your handling code here:
+        
+        PesquisaCod();
+        
+    }//GEN-LAST:event_jTF_CodActionPerformed
 
     /**
      * @param args the command line arguments

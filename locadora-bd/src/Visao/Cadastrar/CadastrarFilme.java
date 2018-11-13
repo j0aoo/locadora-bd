@@ -13,6 +13,8 @@ import Modelo.Categoria;
 import Modelo.Classificacao;
 import Modelo.Filme;
 import java.io.File;
+import java.io.*;
+import java.nio.channels.FileChannel;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -200,6 +202,11 @@ public class CadastrarFilme extends javax.swing.JFrame {
         jButton4.setText("Cancelar");
 
         jButton5.setText("Limpar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -227,6 +234,8 @@ public class CadastrarFilme extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Codigo");
+
+        jTextField1.setEditable(false);
 
         lbCapa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/DVD_VIDEO_logo.png"))); // NOI18N
 
@@ -404,10 +413,24 @@ public class CadastrarFilme extends javax.swing.JFrame {
             foto.setCurrentDirectory(new File("/c:/Locadora/img/"));
             foto.setDialogTitle("Carregar capa");
             foto.showOpenDialog(this);
+            String diretorio = ""+foto.getSelectedFile();
+            String nome = ""+foto.getSelectedFile().getName();
+            
+            FileInputStream origem; 
+            FileOutputStream destino;
+            FileChannel fcOrigem;
+            FileChannel fcDestino;
+            origem = new FileInputStream(""+diretorio);//arquivo que você quer copiar
+            destino = new FileOutputStream("ImagensFilme/"+nome);//onde irá ficar a copia do aquivo
+            fcOrigem = origem.getChannel();
+            fcDestino = destino.getChannel();
+            fcOrigem.transferTo(0, fcOrigem.size(), fcDestino);//copiando o arquivo e salvando no diretório que você escolheu
+            origem.close();
+            destino.close();
             
             String a = ""+foto.getSelectedFile().getName();
             tfCapa.setText(a);
-            lbCapa.setIcon(new ImageIcon("/c:/Locadora/img/"+tfCapa.getText()));
+            lbCapa.setIcon(new ImageIcon("ImagensFilme/"+tfCapa.getText()));
             
         } catch (Exception e) {
             
@@ -478,6 +501,18 @@ public class CadastrarFilme extends javax.swing.JFrame {
         SelecionaComboClassificacao();
         
     }//GEN-LAST:event_Select_ClassActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        
+        jTF_Titulo.setText("");
+        jTF_Ano.setText("");
+        jTF_Duracao.setText("");
+        jTF_Categoria.setText("");
+        jTF_Classificacao.setText("");
+        tfCapa.setText("");
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
