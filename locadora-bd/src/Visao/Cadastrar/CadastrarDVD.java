@@ -168,6 +168,11 @@ public class CadastrarDVD extends javax.swing.JFrame {
         });
 
         jButton4.setText("Cancelar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Limpar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +301,7 @@ public class CadastrarDVD extends javax.swing.JFrame {
 
         int idFilme = Integer.parseInt(jTF_Filme.getText());
         double precoCompra = Double.parseDouble(jTF_Preco.getText());
-        String dataCompra = jD_DataCompra.getDateFormatString();
+        String dataCompra = jD_DataCompra.getDate().toString();
         String situacao = jTF_Situacao.getText();
         String capa = jTF_Capa.getText();
         
@@ -386,6 +391,18 @@ public class CadastrarDVD extends javax.swing.JFrame {
         jTF_Situacao.setText("");
         
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        int a = JOptionPane.showConfirmDialog(null, "Deseja mesmo cancelar a operação?");
+        if (a == 0) {
+            
+            dispose();
+            
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

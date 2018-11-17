@@ -5,32 +5,12 @@
  */
 package Principal;
 
-import Visao.Cadastrar.CadastrarClassificacao;
-import Visao.Cadastrar.CadastrarCliente;
-import Visao.Cadastrar.CadastrarDVD;
-import Visao.Cadastrar.CadastrarFilme;
-import Visao.Cadastrar.CadastroCategoria;
-import Visao.Cadastrar.cadastrarFuncionario;
-import Visao.Consultar.ConsultarCategoria;
-import Visao.Consultar.ConsultarClassificacao;
-import Visao.Consultar.ConsultarCliente;
-import Visao.Consultar.ConsultarDVD;
-import Visao.Consultar.ConsultarFilme;
-import Visao.Consultar.ConsultarFuncionario;
-import Visao.Excluir.ExcluirCategoria;
-import Visao.Excluir.ExcluirClassificacao;
-import Visao.Excluir.ExcluirCliente;
-import Visao.Excluir.ExcluirDVD;
-import Visao.Excluir.ExcluirFilme;
-import Visao.Excluir.ExcluirFuncionario;
-import Visao.alterar.AlterarCategoria;
-import Visao.alterar.AlterarClassificacao;
-import Visao.alterar.AlterarCliente;
-import Visao.alterar.AlterarDVD;
-import Visao.alterar.AlterarFilme;
-import Visao.alterar.AlterarFuncionario;
+import Locacao.*;
+import Visao.Cadastrar.*;
+import Visao.Consultar.*;
+import Visao.Excluir.*;
+import Visao.alterar.*;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -424,10 +404,14 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        
+        new Devolucao().setVisible(true);
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        new Locacao().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -492,6 +476,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         // TODO add your handling code here:
+        new Devolucao().setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed

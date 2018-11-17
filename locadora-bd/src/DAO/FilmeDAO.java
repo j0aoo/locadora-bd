@@ -172,6 +172,49 @@ public class FilmeDAO extends ExecuteSQL {
         
     }
     
+    public List<Filme> Pesquisa_Cod_Filme(int cod) {
+    
+        String sql = "select idfilme,titulo,ano,duracao,idcategoria,idclassificacao,capa from filme where idfilme = '"+ cod +"'";
+        List<Filme> Lista = new ArrayList<>();
+           
+        try {
+
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    Filme a = new Filme();
+                    a.setCodigo(rs.getInt(1));
+                    a.setTitulo(rs.getString(2));
+                    a.setAno(rs.getInt(3));
+                    a.setDuracao(rs.getString(4));
+                    a.setCod_categoria(rs.getInt(5));
+                    a.setCod_classificacao(rs.getInt(6));
+                    a.setCapa(rs.getString(7));
+                    
+                    Lista.add(a);
+                    
+                }
+                
+                return Lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
     public List<Filme> ConsultaCodigoFilme(String nome) {
         
         String sql = "select idfilme from filme where titulo = '"+ nome +"'";
@@ -447,4 +490,49 @@ public class FilmeDAO extends ExecuteSQL {
         
     }
     
+    public List<Filme> CapturaFilme(int cod){
+   
+        String sql = "select * from filme where iddvd = "+ cod +"";
+    
+        List<Filme> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement pr = getcon().prepareStatement(sql);
+            ResultSet rs = pr.executeQuery();
+            
+            if(rs!=null){
+            
+                while(rs.next()){
+                
+                    Filme f = new Filme();
+                    f.setCodigo(rs.getInt(1));
+                    f.setTitulo(rs.getString(2));
+                    f.setAno(rs.getShort(3));
+                    f.setDuracao(rs.getString(4));
+                    f.setCod_categoria(rs.getInt(5));
+                    f.setCod_classificacao(rs.getInt(6));
+                    f.setCapa(rs.getString(7));
+                    lista.add(f);
+
+                }
+               
+                return lista;
+            
+            }else{
+            
+                return null;
+            
+            }                    
+        
+        } catch (SQLException ex) {
+        
+            return null;
+        
+        }
+    
+    }
+    
+    
+      
 }

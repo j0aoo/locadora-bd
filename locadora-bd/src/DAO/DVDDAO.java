@@ -299,5 +299,143 @@ public class DVDDAO extends ExecuteSQL {
         }
         
     }
+
+    public boolean Teste_DVD(int cod) {
+        
+        boolean teste = false;
+        
+        try {
+            
+            String sql = "select iddvd from dvd where iddvd = "+ cod +"";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();   
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    teste = true;
+                    
+                }
+                
+            }
+            
+        } catch (SQLException e) {
+       
+            e.getMessage();
+            
+        }
+        
+        return teste;
+        
+    }
+    
+    public boolean Testar_Situacao(int cod) {
+        
+        boolean teste = false;
+        
+        try {
+            
+            String sql = "select iddvd from dvd where iddvd = "+ cod +" and situacao = 'Disponivel'";
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();   
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    teste = true;
+                    
+                }
+                
+            }
+            
+        } catch (SQLException e) {
+       
+            e.getMessage();
+            
+        }
+        
+        return teste;
+        
+    }
+    
+    public List<DVD> ListarCodFilme(int cod){
+        
+        String sql = "select idfilme from dvd where iddvd = "+ cod +"";
+        List<DVD> lista = new ArrayList<>();
+        
+        try {
+            
+            PreparedStatement ps = getcon().prepareStatement(sql);
+            ResultSet rs = ps .executeQuery();
+            
+            if (rs != null) {
+                
+                while (rs.next()) {
+                    
+                    DVD a = new DVD();
+                    a.setCod_filme(rs.getInt(1));
+                    
+                    lista.add(a);
+                    
+                }
+            
+                return lista;
+                
+            } else {
+                
+                return null;
+                
+            }
+            
+        } catch (SQLException e) {
+            
+            return null;
+            
+        }
+        
+    }
+    
+    public List<DVD> CapturaDVD(int cod){
+    
+        String sql = "select * from dvd where iddvd = '"+ cod +"'";
+    
+        List<DVD> lista = new ArrayList<>();
+        
+        try {
+        
+            PreparedStatement pr = getcon().prepareStatement(sql);
+            ResultSet rs = pr.executeQuery();
+            
+            if(rs!=null){
+            
+                while(rs.next()){
+                
+                    DVD f = new DVD();
+                    f.setCodigo(rs.getInt(1));
+                    f.setCod_filme(rs.getInt(2));
+                    f.setSituacao(rs.getString(3));
+                    f.setPreco(rs.getDouble(4));
+                    f.setData_compra(rs.getString(4));
+                    lista.add(f);
+
+                }
+               
+                return lista;
+            
+            }else{
+            
+                return null;
+            
+            }                    
+        
+        } catch (SQLException ex) {
+        
+            return null;
+        
+        }
+    
+    }   
     
 }
